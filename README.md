@@ -19,7 +19,7 @@ O repositório contém uma soluação em .NET 5.0 onde foi implementado um peque
 
 ## Como usar ?
 
-Tendo os requisistos mínimos para executar uma aplicação .NET 5.0 previamente instalados no local de execução, basta realizar o clone no repositório, acessar o diretório Shop via terminal e executar o comando "dotnet run".
+Tendo os requisistos mínimos para executar uma aplicação .NET 5.0 previamente instalados no local de execução, basta realizar o clone no repositório, acessar o seu diretório Shop via terminal e executar o comando "dotnet run".
 
 Pronto ! a aplicação já está em funcionamento.
 
