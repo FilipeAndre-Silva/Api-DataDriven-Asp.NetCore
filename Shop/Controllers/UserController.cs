@@ -10,6 +10,7 @@ using Microsoft.EntityFrameworkCore;
 using Shop.Data;
 using Shop.Models;
 using Shop.Services;
+using Shop.ViewModels.User;
 
 namespace Shop.Controllers
 {
@@ -27,6 +28,7 @@ namespace Shop.Controllers
 
         [HttpGet]
         [Route("")]
+        [Authorize(Roles = "admin")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         public async Task<ActionResult<List<User>>> Get()
@@ -42,6 +44,7 @@ namespace Shop.Controllers
 
         [HttpGet]
         [Route("{userId:int}")]
+        [Authorize(Roles = "admin")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<ActionResult<User>> GetById(int userId)
@@ -60,7 +63,7 @@ namespace Shop.Controllers
         [AllowAnonymous]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public async Task<ActionResult<User>> Post([FromBody]User productModel)
+        public async Task<ActionResult<User>> Post([FromBody]UserViewModelCreate userViewModelCreate)
         {
             if (!ModelState.IsValid)
             {
@@ -69,9 +72,10 @@ namespace Shop.Controllers
 
             try
             {
-                _context.Users.Add(productModel);
+                var user = _mapper.Map<User>(userViewModelCreate);
+                _context.Users.Add(user);
                 await _context.SaveChangesAsync();
-                return Ok(productModel);
+                return Ok(userViewModelCreate);
             }
             catch (Exception)
             {
@@ -81,13 +85,14 @@ namespace Shop.Controllers
 
         [HttpPut]
         [Route("{userId:int}")]
+        [Authorize(Roles = "admin")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<ActionResult<User>> Put(int userId,
-                                                     [FromBody]User userFromBody)
+                                                     [FromBody]UserViewModelUpdate userViewModelUpdate)
         {
-            if (userId != userFromBody.Id)
+            if (userId != userViewModelUpdate.Id)
             {
                 return NotFound(new { message = "Usuário não encontrado." });
             }
@@ -106,9 +111,10 @@ namespace Shop.Controllers
 
             try
             {
-                _context.Entry<User>(userFromBody).State = EntityState.Modified;
+                var userUpdate = _mapper.Map<User>(userViewModelUpdate);
+                _context.Entry<User>(userUpdate).State = EntityState.Modified;
                 await _context.SaveChangesAsync();
-                return Ok(user);
+                return Ok(userUpdate);
             }
             catch (DbUpdateConcurrencyException)
             {
@@ -146,21 +152,24 @@ namespace Shop.Controllers
         [HttpPost]
         [Route("login")]
         [AllowAnonymous]
-        public async Task<ActionResult<dynamic>> Authenticate([FromBody]User model)
+        public async Task<ActionResult<dynamic>> Authenticate([FromBody]UserViewModelAutentication userViewModelAutentication)
         {
-            var user = await _context.Users
-                .AsNoTracking()
-                .Where(x => x.Username == model.Username && x.Password == model.Password)
-                .FirstOrDefaultAsync();
-
-            if (user == null)
+            var userViewModel = _mapper.Map<User>(userViewModelAutentication);
+            var user = await _context.Users.AsNoTracking()
+                                           .Where(x => x.Username == userViewModel.Username && 
+                                                       x.Password == userViewModel.Password)
+                                           .FirstOrDefaultAsync();
+            if (userViewModel == null)
+            {
                 return NotFound(new { message = "Usuário ou senha inválidos" });
+            }
 
             var token = TokenService.GenerateToken(user);
-            user.Password = user.Password.Replace(user.Password, "*");
+            userViewModel.Password = "*****";
+
             return new
             {
-                user = user,
+                user = userViewModel,
                 token = token
             };
         }
