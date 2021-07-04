@@ -11,11 +11,11 @@ Implementação de uma API orientada a dados usando:
  
 ## Objetivo 
 
-O intuito desse repositório é aplicar alguns dos conhecimentos absorvidos no curso "Criando APIs Data Driven" da plataforma Balta.io criando um projeto simples.
+O intuito desse repositório é aplicar alguns dos conhecimentos absorvidos no curso "Criando APIs Data Driven" da plataforma Balta.io.
 
 ## Solução
 
-O repositório contém uma soluação em .NET 5.0 onde foi implementado um projeto web api com Asp.NET Core. Além das operações tradicionais de crud normalmente econtradas em apis do gênero, a implementação permite algumas intereações entre três entidados principais(Product, Category e User). Além dessas interações e relacionamentos, a api realiza autenticações e autorizações para realizar algumas das operações expostas nos seus endpoints.
+O repositório contém uma soluação em .NET 5.0 onde foi implementado um pequeno projeto web api com Asp.NET Core. Além das operações tradicionais de crud normalmente econtradas em apis do gênero, a implementação permite algumas intereações entre três entidados principais(Product, Category e User). Além dessas interações e relacionamentos, a api realiza autenticações e autorizações para realizar algumas das operações expostas nos seus endpoints.
 
 ## Como usar ?
 
