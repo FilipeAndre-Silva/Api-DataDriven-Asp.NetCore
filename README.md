@@ -6,5 +6,6 @@ Implementação de uma API orientada a dados usando:
  - Swagger Documentation;
  - Entity Framework Core;
  - Entity Framework Core InMemory;
+ - AutoMapper;
  - Authentication JwtBearer;
  
