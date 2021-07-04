@@ -9,3 +9,6 @@ Implementação de uma API orientada a dados usando:
  - AutoMapper;
  - Authentication JwtBearer;
  
+## Objetivo
+
+O intuito desse repositório é registrar alguns dos conhecimentos absorvidos no curso Criando APIs Data Driven da plataforma Balta.io.
