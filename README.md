@@ -11,4 +11,4 @@ Implementação de uma API orientada a dados usando:
  
 ## Objetivo
 
-O intuito desse repositório é registrar alguns dos conhecimentos absorvidos no curso "Criando APIs Data Driven" da plataforma Balta.io.
+O intuito desse repositório é aplicar alguns dos conhecimentos absorvidos no curso "Criando APIs Data Driven" da plataforma Balta.io criando um projeto simples.
